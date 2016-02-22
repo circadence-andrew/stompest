@@ -1,4 +1,8 @@
 #!/bin/bash
-source ~/.profile
-source ${WORKON_HOME}/${STOMPEST_DEV_ENV}/bin/activate
+# the virtual environment ${STOMPEST_DEV_VIRTUALENV} should contain the following
+# packages and their dependencies (to be installed via pip install or easy-install):
+# - stompest
+# - stompest.async
+# - sphinx
+source ${STOMPEST_DEV_VIRTUALENV}/bin/activate
 make html
