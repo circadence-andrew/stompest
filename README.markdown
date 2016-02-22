@@ -9,11 +9,8 @@ stompest is a full-featured [STOMP](http://stomp.github.com/) [1.0](http://stomp
 Both clients make use of a generic set of components in the `protocol` module each of which can be used independently to roll your own STOMP client:
 
 * a wire-level STOMP frame parser `protocol.StompParser` and compiler `protocol.StompFrame`,
-
 * a faithful implementation of the syntax of the STOMP protocol with a simple stateless function API in the `protocol.commands` module,
-
 * a generic implementation of the STOMP session state semantics in `protocol.StompSession`, such as protocol version negotiation at connect time, heart-beating, transaction and subscription handling (including a generic subscription replay scheme which may be used to reconstruct the session's subscription state after a forced disconnect),
-
 * and `protocol.StompFailoverTransport`, a [failover transport](http://activemq.apache.org/failover-transport-reference.html) URI scheme akin to the one used in ActiveMQ.
 
 This package is thoroughly unit tested and production hardened for the functionality used by the current maintainer and by [Mozes](http://www.mozes.com/) --- persistent queueing on [ActiveMQ](http://activemq.apache.org/). Minor enhancements may be required to use this STOMP adapter with other brokers.
@@ -63,12 +60,12 @@ Clients
 
 `sync`
 ------
-* Built on top of the abstract layers, the synchronous client adds a TCP connection and a synchronous API.
+* Built on top of the abstract layers, the synchronous client adds a TCP connection (with SSL support) and a synchronous API.
 * The concurrency scheme (synchronous, threaded, ...) is free to choose by the user.
 
 `async`
 -------
-* Based on the Twisted asynchronous framework.
+* Based on the Twisted asynchronous framework, including TCP connectivity (with SSL support).
 * Fully unit-tested including a simulated STOMP broker.
 * Graceful shutdown: on disconnect or error, the client stops processing new messages and waits for all outstanding message handlers to finish before issuing the `DISCONNECT` command.
 * Error handling - fully customizable on a per-subscription level:
@@ -84,8 +81,8 @@ Acknowledgements
 
 Caveats
 =======
-* Requires Python 2.6 or higher. Not yet tested with Python 3.x.
-* This package is thoroughly unit tested and production hardened for the functionality used by the current maintainer and by [Mozes](http://www.mozes.com/) --- persistent queueing on [ActiveMQ](http://activemq.apache.org/). It is tested with Python 2.6 and 2.7, Twisted 11 and 12 (it should work with Twisted 10.1 and higher), ActiveMQ 5.8 (it should work with 5.5.1 and higher), and [Apollo](http://activemq.apache.org/apollo/) 1.6. Some of the integration tests also pass against [RabbitMQ](http://www.rabbitmq.com/) 3.0.2 (RabbitMQ does not support all extended STOMP features). All of these brokers were tested with STOMP protocols 1.0, 1.1, and 1.2 (if applicable).  Minor enhancements may be required to use this STOMP adapter with other brokers.
+* Requires Python 2.7. Not yet tested with Python 3.x.
+* This package is thoroughly unit tested and production hardened for the functionality used by the current maintainer and by [Mozes](http://www.mozes.com/) --- persistent queueing on [ActiveMQ](http://activemq.apache.org/). It is tested with Python 2.7, Twisted 15 (it should work with Twisted 10.1 and higher), ActiveMQ 5.13 (it should work with 5.5.1 and higher), and [Apollo](http://activemq.apache.org/apollo/) 1.6. Some of the integration tests also pass against [RabbitMQ](http://www.rabbitmq.com/) 3.0.2 (RabbitMQ does not support all extended STOMP features). All of these brokers were tested with STOMP protocols 1.0, 1.1, and 1.2 (if applicable).  Minor enhancements may be required to use this STOMP adapter with other brokers.
 
 To Do
 =====
